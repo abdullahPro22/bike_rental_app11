@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class BikeDetailScreen extends StatefulWidget {
+class BikeDetailScreen extends StatelessWidget {
   final String bikeType;
   final int price;
   final String image;
@@ -12,105 +12,67 @@ class BikeDetailScreen extends StatefulWidget {
   });
 
   @override
-  _BikeDetailScreenState createState() => _BikeDetailScreenState();
-}
-
-class _BikeDetailScreenState extends State<BikeDetailScreen>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _fadeAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Initialize the animation controller and animation
-    _controller = AnimationController(
-      duration: const Duration(seconds: 1),
-      vsync: this,
-    );
-
-    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
-
-    // Start the animation when the screen is built
-    _controller.forward();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    // Make sure that your assets are correctly loaded from the pubspec.yaml file
-    String bikeDetails;
-    if (widget.bikeType == 'Super Bike') {
-      bikeDetails =
-      'A sports motorcycle, sports bike, or sport bike is a motorcycle designed and optimized for speed, acceleration, braking, and cornering on asphalt concrete race tracks and roads. They are mainly designed for performance at the expense of comfort, fuel economy, safety, noise reduction and storage in comparison with other motorcycles..';
-    } else if (widget.bikeType == 'Dirt Bike') {
-      bikeDetails =
-      'Dirt bikes are easy to learn on with a comfortable seat at (usually) a reasonable height. They may not have the power/torque and suspension of a more race-ready enduro or motocross bike. But they can still go anywhere a rider is capable of taking them. The bikes in this segment are also typically cheaper to purchase and maintain. Generally these bikes have 4 stroke air cooled engines and are highly reliable requiring little maintenance..';
-    } else if (widget.bikeType == 'Cycle') {
-      bikeDetails =
-      'A simple and eco-friendly cycle for daily commuting or exercise. Lightweight and easy to handle in urban environments.';
-    } else if (widget.bikeType == 'Road Bike') {
-      bikeDetails =
-      'The Honda CG125 or Honda CG is a commuter motorcycle made by Honda of Japan. It was in production from 1976 to 2008 in Japan and has been in production since 1992 in Pakistan. The CG was originally manufactured in Japan, but the source for the European market was eventually moved to Brazil in 1985, and to Pakistan and Turkey in 1992 for the W and M models. The CG125 is powered by a 124 cc (7.6 cu in) four-stroke.';
-    } else {
-      bikeDetails = 'Details for this bike are not available.';
-    }
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('${widget.bikeType} Details'),
+        title: Text('$bikeType Details', style: TextStyle(color: Colors.black87)),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black54),
       ),
-      body: AnimatedBuilder(
-        animation: _controller,
-        builder: (context, child) {
-          return Opacity(
-            opacity: _fadeAnimation.value,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Display the image of the bike
-                  Image.asset(
-                    widget.image,
-                    width: 200,
-                    height: 150,
-                    fit: BoxFit.cover,
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Details about ${widget.bikeType}:',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Price: \$${widget.price} per day',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    bikeDetails,
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context); // Go back to the bike selection
-                    },
-                    child: Text('Go Back'),
-                  ),
-                ],
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Image.asset(
+                image,
+                width: 300,
+                height: 200,
+                fit: BoxFit.cover,
               ),
             ),
-          );
-        },
+            SizedBox(height: 16.0),
+            Text(
+              'Details about $bikeType',
+              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+            ),
+            Divider(height: 24, thickness: 1.5),
+            Text(
+              'Price: \$${price} per day',
+              style: TextStyle(fontSize: 20, color: Colors.blue, fontWeight: FontWeight.w500),
+            ),
+            SizedBox(height: 20),
+            Text(
+              _getBikeDetails(),
+              textAlign: TextAlign.left,
+              style: TextStyle(fontSize: 16, color: Colors.black54),
+            ),
+            SizedBox(height: 20),
+            Center(
+              child: ElevatedButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('Go Back'),
+              ),
+            ),
+          ],
+        ),
       ),
     );
+  }
+
+  String _getBikeDetails() {
+    switch (bikeType) {
+      case 'Super Bike':
+        return 'The BMW K1300R is a high-performance naked sport bike that combines power, advanced technology, and an aggressive design. With a 1,293 cc inline-four engine producing 173 horsepower and 140 Nm of torque, it offers impressive acceleration and a top speed of around 165 mph (265 km/h). Its lightweight aluminum frame, coupled with BMW’s Duolever front and Paralever rear suspension, ensures agile yet stable handling. The bike also features dual-disc front brakes, ABS, and optional traction control and Electronic Suspension Adjustment (ESA) for customizable riding dynamics. The K1300R’s muscular look, smooth power delivery, and comfortable ride make it ideal for both city commuting and long-distance journeys, appealing to riders who seek performance with standout style.';
+      case 'Dirt Bike':
+        return 'A dirt bike is a lightweight, off-road motorcycle specifically designed for rugged terrains and challenging trails. Built with a compact frame and high ground clearance, it can easily handle obstacles and rough landscapes. Dirt bikes typically have a single-cylinder engine, ranging from 50cc to 450cc, which provides high torque at low speeds—ideal for climbing hills and maneuvering over rough surfaces. The lightweight frame, often made from durable materials like aluminum or steel, enhances handling and control. Additionally, the long-travel suspension with extended front forks and rear shocks allows dirt bikes to absorb impacts, making them perfect for jumps, uneven trails, and adventurous riding in challenging environments.';
+      case 'Cycle':
+        return 'A bicycle, or cycle, is a two-wheeled vehicle powered by human effort, typically through pedals connected to a drivetrain that propels the wheels forward. Known for its simplicity, affordability, and versatility, the bicycle has become one of the most popular modes of transportation worldwide. Bikes come in various types, including road bikes for smooth pavement, mountain bikes for rugged trails, hybrid bikes for mixed terrains, and electric bikes that provide motor-assisted pedaling. With a lightweight frame, efficient gearing, and braking systems, bicycles are ideal for commuting, exercise, and recreation. Besides being eco-friendly, cycling promotes physical fitness, making it a healthy, sustainable choice for short and long journeys alike.';
+      case 'Road Bike':
+        return 'The Honda 125 is a popular lightweight motorcycle, known for its reliability, fuel efficiency, and ease of use, making it an ideal choice for both beginner and experienced riders. Powered by a 125cc four-stroke, single-cylinder engine, this model delivers a smooth ride with enough power for urban commuting while maintaining impressive fuel economy. Its compact design, coupled with a comfortable seat and straightforward handling, makes it well-suited for navigating city streets and short-distance travel. With durable components, low maintenance costs, and Honda’s reputation for quality, the Honda 125 has become a trusted and accessible motorcycle choice worldwide, especially in regions where economical, practical transport is essential.';
+      default:
+        return 'Details are not available for this bike type.';
+    }
   }
 }
