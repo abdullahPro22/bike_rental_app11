@@ -20,24 +20,24 @@ class BikeDetailScreen extends StatelessWidget {
         iconTheme: IconThemeData(color: Colors.black54),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
               child: Image.asset(
                 image,
-                width: 300,
-                height: 200,
+                width: 120,
+                height: 120,
                 fit: BoxFit.cover,
               ),
             ),
-            SizedBox(height: 16.0),
+            SizedBox(height: 8),
             Text(
               'Details about $bikeType',
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
-            Divider(height: 24, thickness: 1.5),
+            Divider(height: 14, thickness: 1.5),
             Text(
               'Price: \$${price} per day',
               style: TextStyle(fontSize: 20, color: Colors.blue, fontWeight: FontWeight.w500),
@@ -71,7 +71,13 @@ class BikeDetailScreen extends StatelessWidget {
         return 'A bicycle, or cycle, is a two-wheeled vehicle powered by human effort, typically through pedals connected to a drivetrain that propels the wheels forward. Known for its simplicity, affordability, and versatility, the bicycle has become one of the most popular modes of transportation worldwide. Bikes come in various types, including road bikes for smooth pavement, mountain bikes for rugged trails, hybrid bikes for mixed terrains, and electric bikes that provide motor-assisted pedaling. With a lightweight frame, efficient gearing, and braking systems, bicycles are ideal for commuting, exercise, and recreation. Besides being eco-friendly, cycling promotes physical fitness, making it a healthy, sustainable choice for short and long journeys alike.';
       case 'Road Bike':
         return 'The Honda 125 is a popular lightweight motorcycle, known for its reliability, fuel efficiency, and ease of use, making it an ideal choice for both beginner and experienced riders. Powered by a 125cc four-stroke, single-cylinder engine, this model delivers a smooth ride with enough power for urban commuting while maintaining impressive fuel economy. Its compact design, coupled with a comfortable seat and straightforward handling, makes it well-suited for navigating city streets and short-distance travel. With durable components, low maintenance costs, and Honda’s reputation for quality, the Honda 125 has become a trusted and accessible motorcycle choice worldwide, especially in regions where economical, practical transport is essential.';
-      default:
+      case 'Quad Bike':
+        return 'A quad bike is an off-road four-wheeler designed for rugged terrains. Equipped with a powerful engine and wide tires, it ensures stability and control, making it perfect for outdoor adventures and rough trails.';
+      case 'Electric Scooter':
+        return 'The electric scooter is an eco-friendly, motorized two-wheeler designed for short city commutes. It features a rechargeable battery and lightweight design, offering a smooth, quiet, and efficient riding experience.';
+      case 'Cruiser Bike':
+        return 'The cruiser bike is designed for long, comfortable rides with a relaxed seating position, powerful engine, and stylish design. Its heavy-duty frame and smooth performance make it ideal for highway cruising and leisure travel.';
+        default:
         return 'Details are not available for this bike type.';
     }
   }
